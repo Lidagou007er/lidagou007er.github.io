@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<form action="" method="POST" name="add_new">
+    <div class="leftdiv">
+
+        food style:
+        <p>{{form.food_input}}</p>
+        food num:
+        <p>{{form.food_num}}</p>
+        food cal:
+        <p>{{form.food_cal}}</p>
+        food memo:
+        <p>{{form.food_memo}}</p>
+        <button type="button" onClick=auto_input(this)>粮</button>
+        <button type="button" onClick=auto_input(this)>肉</button>
+        <button type="button" onClick=auto_input(this)>奶</button>
+        <button type="button" onClick=auto_input(this)>蛋</button>
+        <button type="button" onClick=auto_input(this)>蔬</button>
+        <button type="button" onClick=auto_input(this)>果</button>
+        <button type="button" onClick=auto_input(this)>豆</button>
+        <button type="button" onClick=auto_input(this)>饮</button>
+        <p>{{ form.submit}}</p>
+
+        <input type="submit" name="submit" value="Today">
+         <input type="submit" name="submit" value="Yesterday">
+         <input type="submit" name="submit" value="The day before yesterday">
+    <p>today's eat cal:{{caltoday}}</p>
+    <p>today's sport cal:{{sport_caltoday}}</p>
+    <p>today's cal-gap:{{1813.6+sport_caltoday-caltoday}}={{sport_caltoday}}+1813.6-{{caltoday}}</p>
+
+    <p>this week's eat cal:{{calweek}}</p>
+    <p>this week's sport cal:{{sport_calweek}}</p>
+    <p>this week's cal-gap:{{1813.6*7+sport_calweek-calweek}}={{sport_caltoday}}+1813.6*7-{{calweek}}</p>
+
+    <p>this month's cal:{{calmonth}}</p>
+    <p>this month's sport cal:{{sport_calmonth}}</p>
+
+    </div>
+
+    <div class="middiv">
+    {% for food in food_list %}
+        <p>{{food.name}} | {{food.unit}} | {{food.cal}}</p>
+    {% endfor %}
+    </div>
+
+    <div class="rightdiv">
+        <iframe id="iframe1" width="600" height="1000" src="http://www.boohee.com/assessment/calory"></iframe>
+    </div>
+</form>
+{% endblock %}

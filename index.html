@@ -1,0 +1,282 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>007er初心记录</title>
+        <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.12.1/jquery-ui.js"></script>		
+        <script type="text/javascript" src="js/vue.min.js"></script>
+        <script src="js/axios.min.js"></script>
+        <script src="js/js.cookie.js"></script>        
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" >
+    </head>
+    <body>
+        <div id="terminal">
+            <div style="margin-left:auto;margin-right:auto;text-align:center">
+                <br><br><br><br><br>
+                <h1>007er初心记录</h1>
+                <br>
+            </div>
+            <div style="margin-left:auto;margin-right:auto;width:50%" >
+                <div style="float:left;width:80%" >           
+                    <input type="text" class="form-control" placeholder="输入他的007ID" aria-describedby="basic-addon1" v-model="sb_id">
+                </div>
+                <button type="button" class="btn btn-success"  v-on:click="get_my_info(sb_id)">查看别人初心</button>
+                
+            </div>
+            <br>
+            <br>
+            <br>
+            <div style="margin-left:auto;margin-right:auto;text-align:center" id="add_btn">                    
+                <button type="button" class="btn btn-primary btn-lg" v-on:click="add_new_one()">添加我的初心</button>
+            </div>
+            <br>
+            <br>
+            <br>
+            <div style="width:50%;margin-left:auto;margin-right:auto">
+            <div id="new_pages" style="margin-left:auto;margin-right:auto;text-align:center;display:none;">
+                <div class="input-group">
+                    <span class="input-group-addon">编号</span>
+                    <input type="text" class="form-control" placeholder="id" aria-describedby="basic-addon1" v-model="id">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">姓名</span>
+                    <input type="text" class="form-control" placeholder="name" aria-describedby="basic-addon1" v-model="name">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">城市</span>
+                    <input type="text" class="form-control" placeholder="city" aria-describedby="basic-addon1"  v-model="city">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">电话</span>
+                    <input type="text" class="form-control" placeholder="phone_num" aria-describedby="basic-addon1" v-model="phone_num">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">公众号</span>
+                    <input type="text" class="form-control" placeholder="official accounts" aria-describedby="basic-addon1" v-model="offcial_account">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">标签</span>
+                    <input type="text" class="form-control" placeholder="tags" aria-describedby="basic-addon1" v-model="tags">                    
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">其它</span>
+                    <input type="text" class="form-control" placeholder="others" aria-describedby="basic-addon1"  v-model="others">                    
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">爱好</span>
+                    <input type="text" class="form-control" placeholder="hobbies" aria-describedby="basic-addon1" v-model="hobbies">                    
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">愿帮助大家</span>
+                    <textarea class="form-control" rows=3 placeholder="sth I provide!" v-model="sth_I_provide"></textarea>   
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">愿得大家帮助</span>
+                    <textarea class="form-control" rows=3 placeholder="sth I want!" v-model="sth_I_want"></textarea>                       
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">加入007的理由</span>
+                    <textarea class="form-control" rows=3 placeholder="reason" v-model="reason"></textarea>                       
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">对班级的期望</span>
+                    <textarea class="form-control" rows=3 placeholder="my expect" v-model="my_expect"></textarea>                       
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">七年后想成为什么样的自己</span>
+                    <textarea class="form-control" rows=5 placeholder="me after 7 years" v-model="me_after_7_years"></textarea>                       
+                </div>
+                <br>
+                <div style="margin-left:auto;margin-right:auto;text-align:center">                    
+                    <button type="button" class="btn btn-success btn-lg" v-on:click="save_my_info()">提交！</button>
+                </div>
+            </div>
+            <div id="page_found" style="margin-left:auto;margin-right:auto;text-align:left;display:none;">
+                <b>编号：</b>{{id}}
+                <br> 
+                <br>
+                <b>名字：</b>{{name}}
+                <br>                
+                <br>
+                <b>城市：</b>{{city}}
+                <br>                
+                <br>
+                <b>电话：</b>{{phone_num}}
+                <br>                
+                <br>
+                <b>公众号：</b>{{offcial_account}}
+                <br>                
+                <br>
+                <b>标签：</b>{{tags}}
+                <br>                
+                <br>
+                <b>其它：</b>{{others}}
+                <br>
+                <br>
+                <b>爱好：</b>{{hobbies}}  
+                <br>
+                <br>
+                <b>愿帮助大家：</b><br>{{sth_I_provide}}
+                <br>
+                <br>
+                <b>愿得大家帮助：</b><br>{{sth_I_want}}
+                <br>
+                <br>
+                <b>加入007的理由：</b><br>{{reason}}
+                <br>
+                <br>
+                <b>对班级的期望：</b><br>{{my_expect}}
+                <br>
+                <br>
+                <b>七年后想成为什么样的自己：</b><br>{{me_after_7_years}}
+                
+            </div>                    
+            </div>
+        </div>
+        <script>
+            var terminal=new Vue({
+                el:'#terminal',
+                data:
+                {
+                    sb_id:'',
+                    id:'',
+                    name:'',
+                    city:'',
+                    phone_num:'',
+                    offcial_account:'',
+                    tags:'',
+                    others:'',
+                    hobbies:'',
+                    sth_I_provide:'',
+                    sth_I_want:'',
+                    reason:'',
+                    my_expect:'',
+                    me_after_7_years:''
+
+                },
+                methods:
+                {
+                    add_new_one:function()
+                    {
+                        $("#new_pages").css('display','inline')
+                        $("#add_btn").css('display','none')
+
+                    },
+                    check_cookies:function()
+                    {
+
+                        if(Cookies.get('007id')!=undefined){
+                            terminal.get_my_info(Cookies.get('007id'))
+
+                           
+                        }
+                    },
+                    get_my_info:function(the_id)
+                    {
+                        axios({
+                            method:'post',
+                            url:'http://45.32.51.110:5000/get_my_info',
+                            data:
+                            {
+                                id:the_id
+                            },
+                            headers:
+                            {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            }
+                        })
+                        .then(
+                            function(response){
+                                terminal.id=response.data.the_writer[0].id007
+                                terminal.name=response.data.the_writer[0].name
+                                terminal.city=response.data.the_writer[0].city
+                                terminal.phone_num=response.data.the_writer[0].phone_num
+                                terminal.offcial_account=response.data.the_writer[0].offcial_account
+                                terminal.tags=response.data.the_writer[0].tags
+                                terminal.others=response.data.the_writer[0].others
+                                terminal.hobbies=response.data.the_writer[0].hobbies
+                                terminal.sth_I_provide=response.data.the_writer[0].sth_i_provide
+                                terminal.sth_I_want=response.data.the_writer[0].sth_i_want
+                                terminal.reason=response.data.the_writer[0].reason
+                                terminal.my_expect=response.data.the_writer[0].my_expect
+                                terminal.me_after_7_years=response.data.the_writer[0].me_after_7_years
+
+
+                                $("#new_pages").css('display','none')
+                                $("#add_btn").css('display','none')
+                                $("#page_found").css('display','inline')
+                            }
+                        )
+                        .catch(
+                            function(error)
+                            {
+                                console.log(error);
+                            }
+                        )
+                    },
+                    save_my_info:function()
+                    {
+                        axios({
+                            method:'post',
+                            url:'http://45.32.51.110:5000/save_my_info',
+                            data:
+                            {
+                                id:terminal.id,
+                                
+                                name:terminal.name,
+                                city:terminal.city,
+                                phonenum:terminal.phone_num,
+                                offcialaccount:terminal.offcial_account,
+                                tags:terminal.tags,
+                                others:terminal.others,
+                                hobbies:terminal.hobbies,
+                                sthiprovide:terminal.sth_I_provide,
+                                sthiwant:terminal.sth_I_want,
+                                reason:terminal.reason,
+                                myexpect:terminal.my_expect,
+                                meafter7years:terminal.me_after_7_years
+                                                              
+                            },
+                            headers:
+                            {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            } 
+                        })
+                        .then(
+                            function(response){
+                                //将007id作为cookies
+                                Cookies.set('007id', response.data, { expires: 365 });
+                                $("#new_pages").css('display','none')
+                                $("#page_found").css('display','inline')
+                                $("#add_btn").css('display','none')
+                                console.log(response.data)
+
+                                
+                            }
+                        )
+                        .catch(
+                            function(error)
+                            {
+                                console.log(error);
+                            }
+                        )
+                    },
+                }
+            })
+            terminal.check_cookies()
+
+        </script>
+    </body>
+</html>
